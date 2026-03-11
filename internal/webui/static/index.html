@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenTrace Web</title>
+  <link rel="icon" type="image/png" href="https://opentrace.app/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="workspace">
+      <header class="topbar">
+        <div>
+          <h1>OpenTrace Web</h1>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel controls">
+          <div class="toolbar">
+            <form id="trace-form">
+              <label class="field field-grow">
+                <span>目标</span>
+                <input id="target" name="target" type="text" placeholder="1.1.1.1 or example.com" required>
+              </label>
+              <div class="actions">
+                <button id="start-button" type="submit">开始</button>
+                <button id="stop-button" type="button" class="secondary" disabled>停止</button>
+              </div>
+              <label class="field">
+                <span>协议</span>
+                <select id="protocol" name="protocol">
+                  <option value="icmp">ICMP</option>
+                  <option value="tcp">TCP</option>
+                  <option value="udp">UDP</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>IP 数据源</span>
+                <select id="data-provider" name="dataProvider">
+                  <option value="">LeoMoeAPI</option>
+                  <option value="IPInfo">IPInfo</option>
+                  <option value="IP.SB">IP.SB</option>
+                  <option value="IPAPI.com">IP-API.com</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>DNS</span>
+                <select id="dns-resolver" name="dnsResolver">
+                  <option value="system">系统 DNS</option>
+                  <option value="google">Google DNS</option>
+                  <option value="cloudflare_doh">CloudFlare DoH</option>
+                </select>
+              </label>
+              <label class="field field-small">
+                <span>超时</span>
+                <input id="timeout" name="timeout" type="number" min="10" max="600" value="120">
+              </label>
+              <label class="toggle">
+                <input id="mtr" name="mtr" type="checkbox">
+                <span>MTR</span>
+              </label>
+            </form>
+          </div>
+        </section>
+
+        <section class="panel results-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">路由结果</p>
+              <h2>跃点列表</h2>
+            </div>
+            <div class="panel-meta">
+              <span id="reply-count" class="panel-chip">0 个响应</span>
+              <span id="hop-count" class="panel-badge">0 跳</span>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>跳数</th>
+                  <th>IP</th>
+                  <th>延迟</th>
+                  <th>地理位置</th>
+                  <th>组织</th>
+                  <th>AS</th>
+                  <th>主机名</th>
+                </tr>
+              </thead>
+              <tbody id="hop-table-body">
+                <tr class="empty-row">
+                  <td colspan="7">暂无追踪任务。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel map-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">拓扑视图</p>
+              <h2>地图</h2>
+            </div>
+            <div class="panel-meta">
+              <span id="map-node-count" class="panel-chip">0 个节点</span>
+              <span id="map-endpoint" class="panel-badge subtle">暂无终点</span>
+            </div>
+          </div>
+          <div id="map"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+.git
+.github
+.vscode
+dist
+HomePage
+bin
+obj
+*.user
+*.suo
+*.swp
+*.DS_Store

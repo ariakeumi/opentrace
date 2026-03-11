@@ -1,70 +1,57 @@
-<div align="center">
+# OpenTrace Web
 
-<img src="https://github.com/nxtrace/NTrace-V1/raw/main/assets/logo.png" height="200px" alt="Logo"/>
+OpenTrace Web 是一个自托管的路由追踪服务。
 
-<h3>
-  <a href="https://opentrace.app">🌐 Official Website</a> | 
-  <a href="readme_zh.md">🇨🇳 中文说明</a>
-</h3>
+它包含：
 
-</div>
+- 浏览器界面
+- Go 后端
+- 在服务器上执行 `nexttrace`
+- 实时跃点更新和地图展示
 
-## OpenTrace
+![opentrace-web](opentrace-web.png)
 
-OpenTrace is an open source visualized route tracing tool.
+## Docker 运行
 
-OpenTrace 是一款跨平台可视化路由追踪工具。
+```
+docker run -d --name opentrace-web -p 8080:8080 --cap-add=NET_RAW opentrace-web:latest
+```
 
+## 构建
 
-### Usage
+构建镜像：
 
-- Download OpenTrace for your system from the [official website](https://opentrace.app) or [releases](https://github.com/Archeb/opentrace/releases). Linux users can also install it via [Flathub](https://flathub.org/en/apps/io.github.Archeb.opentrace) or [Arch User Repository](https://aur.archlinux.org/packages/opentrace-bin/).
+```bash
+docker buildx build --platform linux/amd64,linux/arm64 -t opentrace-web:latest .
+```
 
-<details>
-<summary>Alternatively, if you compiled it yourself, then you need to:</summary>
+运行容器：
 
-- Download and install NextTrace: Download NextTrace for your system architecture from [here](https://github.com/nxtrace/Ntrace-V1/releases).
+```bash
+docker run --rm -p 8080:8080 --cap-add=NET_RAW opentrace-web:latest
+```
 
-- Place NextTrace in the OpenTrace directory, or in a directory included in your system's PATH environment variable; you can also place it anywhere and manually specify the path (recommended for macOS users).
-</details>
+打开：
 
-- If you are a **Windows user** and want to use TCP/UDP Traceroute, you also need to [download and install Npcap](https://npcap.com/#download).
+```text
+http://127.0.0.1:8080
+```
 
-- Unzip and run OpenTrace(.exe)
+## 本地运行
 
-### Features
+环境要求：
 
-- [x] Cross-platform native GUI (Windows WPF / Linux GTK / macOS)
+- Go 1.22+
+- `nexttrace`
 
-- [x] An interface you are familiar with, but with even more powerful functionalities
+启动：
 
-- [x] User-friendly GUI and easy-to-understand parameter descriptions
+```bash
+go run ./cmd/server --nexttrace-bin /path/to/nexttrace
+```
 
-- [x] MTR (My Traceroute) functionality
+## 说明
 
-- [x] Multi-language support (English, Chinese, French, Spanish, Japanese, Russian)
-
-- [x] Custom DNS Resolvers (DNS, DoH)
-
-- [x] Use CLI to start a trace
-
-- [x] Supports local .MMDB database
-
-More is coming... [Feature request](https://github.com/Archeb/opentrace/issues/new/choose) is welcome!
-
-> **Tip**: You can also download the latest beta version of the corresponding architecture from the [Actions page of this project](https://github.com/Archeb/opentrace/actions); however, it may contain bugs or vulnerabilities, or may be unstable.
-
-### Images
-
-![macOS Dark](./HomePage/img/macos_dark.jpg)
-![Windows](./HomePage/img/windows.png)
-![Linux](./HomePage/img/linux.png)
-![Preferences on macOS](https://i.imgur.com/X0L6c6S.png)
-
-### Credit
-
-OpenTrace uses [NextTrace](https://github.com/nxtrace/Ntrace-V1) as the backend.
-
-### License
-
-OpenTrace is released under the [GPL-3.0 license](LICENSE.txt).
+- 路由追踪从服务器发起，不是从浏览器客户端发起
+- Docker 镜像默认使用 `root` 运行
+- 镜像支持 `linux/amd64` 和 `linux/arm64`
