@@ -71,6 +71,7 @@ Notes:
 - the image runs as `root`
 - it bundles `nexttrace-amd64` and `nexttrace-arm64`
 - the final image auto-selects the right `nexttrace` binary for `amd64` or `arm64`
+- GitHub Actions workflow pushes to Docker Hub using `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN`
 
 Example create request:
 

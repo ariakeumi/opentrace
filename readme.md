@@ -14,7 +14,7 @@ OpenTrace Web 是一个自托管的路由追踪服务。
 ## Docker 运行
 
 ```
-docker run -d --name opentrace-web -p 8080:8080 --cap-add=NET_RAW opentrace-web:latest
+docker run -d --name opentrace-web -p 8080:8080 --cap-add=NET_RAW q000q000/opentrace-web:latest
 ```
 
 ## 构建
